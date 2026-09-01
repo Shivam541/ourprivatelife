@@ -36,25 +36,26 @@
       </section>
 
       <section class="card">
-        <h2>Caller: create and send an offer</h2>
-        <p>After camera access is granted, create an offer. Copy the complete text and send it to your friend over a channel you trust.</p>
-        <textarea id="localOffer" readonly aria-label="Your offer"></textarea>
-        <button class="copy" data-copy="localOffer">Copy offer</button>
+        <h2>Caller: create an invite</h2>
+        <p>Create an invite, copy it, and send it to your friend. The WebRTC data stays hidden.</p>
+        <button id="copyOfferButton" class="copy" disabled>Copy invite code</button>
       </section>
 
-      <section class="card">
-        <h2>Receiver: accept an offer and create an answer</h2>
-        <p>Paste the caller's offer, then create and send the generated answer back to the caller.</p>
-        <textarea id="remoteOffer" placeholder="Paste offer JSON here" aria-label="Offer from friend"></textarea>
+      <section id="receiverCard" class="card">
+        <h2>Receiver: paste an invite</h2>
+        <p>Paste the invite, create a response, then send that code back to the caller.</p>
+        <textarea id="remoteOffer" placeholder="Paste invite code here" aria-label="Invite code from friend"></textarea>
         <button id="createAnswerButton">Accept offer &amp; create answer</button>
-        <textarea id="localAnswer" readonly aria-label="Your answer"></textarea>
-        <button class="copy" data-copy="localAnswer">Copy answer</button>
+        <div id="answerReady" hidden>
+          <p class="success">Response ready — copy and send it.</p>
+          <button id="copyAnswerButton" class="copy">Copy response code</button>
+        </div>
       </section>
 
-      <section class="card">
-        <h2>Caller: accept the answer</h2>
-        <p>Paste your friend's answer to finish the manual handshake.</p>
-        <textarea id="remoteAnswer" placeholder="Paste answer JSON here" aria-label="Answer from friend"></textarea>
+      <section id="callerAnswerCard" class="card" hidden>
+        <h2>Caller: connect</h2>
+        <p>Paste the response. Keep this browser tab open—reloading it invalidates the invite.</p>
+        <textarea id="remoteAnswer" placeholder="Paste response code here" aria-label="Response code from friend"></textarea>
         <button id="acceptAnswerButton">Accept answer</button>
       </section>
     </main>

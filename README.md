@@ -13,11 +13,11 @@ The page is suitable for GitHub Pages. GitHub Pages serves it over HTTPS, which 
 ## Calling flow
 
 1. Both people open the same deployed page and press **Start camera & microphone**.
-2. Caller presses **Create offer**, then copies the generated JSON to the receiver using a trusted out-of-band channel.
-3. Receiver pastes it into the offer box, presses **Accept offer & create answer**, and sends the generated answer back.
+2. Caller creates and copies a compact Base64 invite code to the receiver using a trusted out-of-band channel.
+3. Receiver pastes it, creates a response code, and sends that back.
 4. Caller pastes that answer into the final box and presses **Accept answer**.
 
-The app waits for ICE gathering to be `complete` before it exports each description, so all candidates found in strict mode are included in the copied text.
+The app waits for ICE gathering to be `complete` before it exports each description. Base64 makes copying easier, but it is **not encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
 ## Privacy and reliability boundary
 
