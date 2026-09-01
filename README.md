@@ -19,6 +19,18 @@ The page is suitable for GitHub Pages. GitHub Pages serves it over HTTPS, which 
 
 The app waits for ICE gathering to be `complete` before it exports each description. Base64 makes copying easier, but it is **not encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
+## In-call controls and recording
+
+Once camera and microphone access is granted, the call controls can mute/unmute the microphone and turn the camera off/on without disconnecting. The incoming friend video can also be recorded locally at a selected 720p or 1080p WebM output size; choose the quality, press the record icon, then press it again to stop and download the file.
+
+Recording is entirely browser-local and does not upload media to this app, but it is a sensitive action. Get the other participant's clear consent before starting. The selected output size does not create detail that is absent from the incoming video—a 1080p file may upscale a lower-resolution stream.
+
+The friend video is the main call view; your camera is a movable, resizable tile. Use the icon controls in a video footer to pin a view, enter browser full screen, or minimize back to the tiled call view. Pinned view keeps the other feed as a movable tile. The microphone, camera, record, and hang-up controls use icons with hover labels.
+
+## Screen sharing status
+
+Screen sharing is not implemented yet. It can be added with the browser's `getDisplayMedia()` API without adding a backend: a basic version would replace the outgoing camera track for the existing call, then restore it when sharing ends. Keeping a camera tile and screen share visible at the same time would require a second WebRTC track and another manual offer/answer exchange.
+
 ## Privacy and reliability boundary
 
 STUN lets each browser learn network candidates that may allow a direct connection across different home, office, or mobile networks. It does **not** carry call audio/video after a direct route is established. The STUN provider can receive network metadata, such as your public IP address.
