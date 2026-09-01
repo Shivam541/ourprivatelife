@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A manual-signaling WebRTC video call demo." />
+    <title>Our Private Life — Direct Call</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <p class="eyebrow">ourprivatelife.com · Manual signaling · WebRTC</p>
+        <h1>Our Private Life</h1>
+        <p class="intro">No app backend, database, or TURN relay is used. Manual copy-paste signaling keeps setup server-free.</p>
+      </header>
+
+      <aside class="warning">
+        <strong>Important:</strong> this version uses Google's public STUN service only to discover network candidates, which makes direct calls across different cities much more likely. Call media is still peer-to-peer when a direct connection succeeds. Some restrictive networks use symmetric NAT and will still fail without a TURN relay. GitHub Pages only hosts this page; it is not part of the call.
+      </aside>
+
+      <section class="status" aria-live="polite">
+        <span id="statusDot" class="dot"></span>
+        <span id="statusText">Not connected</span>
+      </section>
+
+      <section class="videos" aria-label="Video streams">
+        <figure><video id="localVideo" autoplay playsinline muted></video><figcaption>Your camera</figcaption></figure>
+        <figure><video id="remoteVideo" autoplay playsinline></video><figcaption>Friend's camera</figcaption></figure>
+      </section>
+
+      <section class="controls">
+        <button id="startCameraButton">1. Start camera &amp; microphone</button>
+        <button id="createOfferButton" disabled>2. Create offer</button>
+        <button id="disconnectButton" class="secondary" disabled>Disconnect</button>
+      </section>
+
+      <section class="card">
+        <h2>Caller: create and send an offer</h2>
+        <p>After camera access is granted, create an offer. Copy the complete text and send it to your friend over a channel you trust.</p>
+        <textarea id="localOffer" readonly aria-label="Your offer"></textarea>
+        <button class="copy" data-copy="localOffer">Copy offer</button>
+      </section>
+
+      <section class="card">
+        <h2>Receiver: accept an offer and create an answer</h2>
+        <p>Paste the caller's offer, then create and send the generated answer back to the caller.</p>
+        <textarea id="remoteOffer" placeholder="Paste offer JSON here" aria-label="Offer from friend"></textarea>
+        <button id="createAnswerButton">Accept offer &amp; create answer</button>
+        <textarea id="localAnswer" readonly aria-label="Your answer"></textarea>
+        <button class="copy" data-copy="localAnswer">Copy answer</button>
+      </section>
+
+      <section class="card">
+        <h2>Caller: accept the answer</h2>
+        <p>Paste your friend's answer to finish the manual handshake.</p>
+        <textarea id="remoteAnswer" placeholder="Paste answer JSON here" aria-label="Answer from friend"></textarea>
+        <button id="acceptAnswerButton">Accept answer</button>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
