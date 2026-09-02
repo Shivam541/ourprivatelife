@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A manual-signaling WebRTC video call demo." />
     <title>Our Private Life — Direct Call</title>
-    <link rel="stylesheet" href="styles.css?v=20260902-2" />
+    <link rel="stylesheet" href="styles.css?v=20260902-3" />
   </head>
   <body>
     <main>
@@ -24,9 +24,9 @@
           <h2>2. Choose how you want to connect</h2>
           <div class="signaling-grid">
             <div class="signaling-option"><h3>Start a session</h3><p>Create an invite, send it to your friend, then paste their response below.</p><button id="createOfferButton" disabled>Create invite</button><button id="copyOfferButton" class="secondary" disabled>Copy invite code</button></div>
-            <div id="receiverCard" class="signaling-option"><h3>Join a session</h3><p>Paste your friend’s invite, then copy the response back to them.</p><textarea id="remoteOffer" placeholder="Paste invite code here" aria-label="Invite code from friend"></textarea><button id="createAnswerButton">Accept invite &amp; create response</button><div id="answerReady" hidden><p class="success">Response ready — copy and send it.</p><button id="copyAnswerButton" class="secondary">Copy response code</button><button id="enterCallAfterAnswerButton">Enter call</button></div></div>
+            <div id="receiverCard" class="signaling-option"><h3>Join a session</h3><p>Paste your friend’s invite, then copy the response back to them.</p><textarea id="remoteOffer" placeholder="Paste invite code here" aria-label="Invite code from friend"></textarea><button id="pasteOfferButton" class="secondary">Paste invite</button><button id="createAnswerButton">Accept invite &amp; create response</button><div id="answerReady" hidden><p class="success">Response ready — copy and send it.</p><button id="copyAnswerButton" class="secondary">Copy response code</button><button id="enterCallAfterAnswerButton">Enter call</button></div></div>
           </div>
-          <div id="callerAnswerCard" class="answer-card" hidden><h3>Finish starting your session</h3><p>Paste your friend’s response. Keep this tab open — reloading it invalidates the invite.</p><textarea id="remoteAnswer" placeholder="Paste response code here" aria-label="Response code from friend"></textarea><button id="acceptAnswerButton">Start call</button></div>
+          <div id="callerAnswerCard" class="answer-card" hidden><h3>Finish starting your session</h3><p>Paste your friend’s response. Keep this tab open — reloading it invalidates the invite.</p><textarea id="remoteAnswer" placeholder="Paste response code here" aria-label="Response code from friend"></textarea><button id="pasteAnswerButton" class="secondary">Paste response</button><button id="acceptAnswerButton">Start call</button></div>
         </section>
       </section>
       <section id="callPage" class="call-page" aria-label="Video call" hidden>
@@ -44,6 +44,6 @@
         </nav>
       </section>
     </main>
-    <script src="app.js?v=20260902-2"></script>
+    <script src="app.js?v=20260902-3"></script>
   </body>
 </html>

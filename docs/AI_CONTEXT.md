@@ -23,9 +23,9 @@ Caller browser                         Receiver browser
 --------------                         ----------------
 camera/mic → RTCPeerConnection         camera/mic → RTCPeerConnection
        │                                        │
-       ├─ create offer → Base64 invite code ────┤ manual trusted channel
+       ├─ create offer → compressed invite code ┤ manual trusted channel
        │                                        │
-       ├─ paste Base64 response code ←──────────┤ create answer
+       ├─ paste compressed response code ←───────┤ create answer
        │                                        │
        └──────── encrypted direct WebRTC media ─┘
 
@@ -47,7 +47,7 @@ There is intentionally no TURN server. Therefore, calls can fail on restrictive 
 ## Important technical truths
 
 1. WebRTC offer/answer exchange is manual. The app has no server-based signaling or friend discovery.
-2. The offer and answer are WebRTC session descriptions. The UI Base64-encodes them solely to make copy/paste less awkward. **Base64 is not encryption.**
+2. The offer and answer are WebRTC session descriptions. In Chrome, the UI gzip-compresses then URL-safe Base64-encodes new codes with an `OPL2.` prefix; it continues accepting the prior Base64 format. This is only for easier copy/paste. **Neither format is encryption.**
 3. WebRTC transport is encrypted by the browser; this app does not implement an extra password-based encryption layer.
 4. The app waits for `iceGatheringState === "complete"` before serializing local descriptions. This ensures candidates gathered at that point are included in the copied code.
 5. A caller's `RTCPeerConnection` lives only in JavaScript memory. Reloading, closing, or navigating away from the caller tab invalidates that invite. Do not imply that localStorage alone can preserve an active call; it cannot preserve the live browser connection state.
@@ -61,18 +61,18 @@ The interface has two full-screen app views in one document: the setup view and 
 ### Caller
 
 1. Select **Enable camera & microphone** and grant browser permission.
-2. Select **Create invite**. The app creates a peer connection, waits for ICE gathering, stores the Base64 invite in the current browser session, and reveals **Copy invite code**.
+2. Select **Create invite**. The app creates a peer connection, waits for ICE gathering, stores the compressed invite in the current browser session, and reveals **Copy invite code**.
 3. Send the invite code to the receiver through an out-of-band channel.
-4. Paste the returned response code into the single caller input and select **Start call**.
+4. Select **Paste response** (or paste manually) into the single caller input and select **Start call**.
 5. The dedicated call view opens. Keep the tab open until connected or disconnected.
 
 ### Receiver
 
-1. Paste the received invite code into the visible input.
+1. Select **Paste invite** (or paste the received invite code manually) into the visible input.
 2. Select **Accept invite & create response**. The app requests camera/microphone access if needed, produces a response, and hides the invite input.
 3. Copy and send the response code back to the caller, then select **Enter call**.
 
-Only the relevant text input should be visible at a time. Do not reintroduce exposed JSON textareas as output; codes are copied with buttons. The call view contains only the feeds and mic, camera, layout, switch-screen, and leave controls. Recording is deliberately unavailable. The layout control switches between picture-in-picture and side-by-side feeds. In picture-in-picture, the elevated smaller feed is draggable within the call area; Switch exchanges the large and floating feeds. On phones, the controls use five equal-width cells; on short landscape screens their visible labels are hidden but their accessible labels remain, ensuring every control stays on screen.
+Only the relevant text input should be visible at a time. Do not reintroduce exposed JSON textareas as output; codes are copied with buttons and can be pasted from the clipboard with a user-initiated control (manual paste remains the fallback if clipboard permission is unavailable). The call view contains only the feeds and mic, camera, layout, switch-screen, and leave controls. Recording is deliberately unavailable. The layout control switches between picture-in-picture and side-by-side feeds. In picture-in-picture, the elevated smaller feed is draggable within the call area; Switch exchanges the large and floating feeds. On phones, the controls use five equal-width cells; on short landscape screens their visible labels are hidden but their accessible labels remain, ensuring every control stays on screen.
 
 ## Editing guidance
 
