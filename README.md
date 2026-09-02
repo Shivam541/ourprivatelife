@@ -14,14 +14,18 @@ The page is suitable for GitHub Pages. GitHub Pages serves it over HTTPS, which 
 
 The app has a setup page and a dedicated full-screen call page, implemented as two views in the same browser document. This preserves the live WebRTC connection: navigating to a separate HTML page would destroy the caller's in-memory peer connection and invalidate the invite.
 
+Browser Back navigation is locked for this tab, including history gestures and Backspace outside a text field. Use the app’s **Leave** control to end a call, or close the tab/window when finished.
+
 1. On the setup page, both people enable camera and microphone.
 2. The caller creates and copies an invite code to the receiver using a trusted out-of-band channel.
-3. The receiver uses **Paste invite** (or pastes manually), creates a response code, sends that back, and can enter the call view while the caller completes the connection.
+3. The receiver uses **Paste invite** (or pastes manually), creates a response code, and can either copy it on the setup view or enter the call. Once in the call, **Copy** remains available in the call controls until they leave.
 4. The caller pastes that response and selects **Start call**. The app then switches to the dedicated call view.
 
 The app waits for ICE gathering to be `complete` before it exports each description. The current invite/response format is standard Base64 for the broadest browser compatibility; the app can still accept a previously issued compressed `OPL2.` code in a supporting browser. Neither format is **encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
 When camera access is enabled, the app tries 2560×1440 (2K) at 30fps first, then 1920×1080 at 30fps, and finally the browser’s default camera mode. Browser encoding performance and available network bandwidth can still reduce the quality delivered to the other person.
+
+The browser can share a microphone with another tab or app only when the operating system and device driver allow it. This app cannot read audio already captured by Google Meet or override an exclusive microphone lock. If the microphone becomes unavailable during an active call, end the other call or release that microphone, then select **Mic** in this app to reconnect it without ending the WebRTC call.
 
 ## In-call controls
 
