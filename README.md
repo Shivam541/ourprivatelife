@@ -15,11 +15,11 @@ The page is suitable for GitHub Pages. GitHub Pages serves it over HTTPS, which 
 The app has a setup page and a dedicated full-screen call page, implemented as two views in the same browser document. This preserves the live WebRTC connection: navigating to a separate HTML page would destroy the caller's in-memory peer connection and invalidate the invite.
 
 1. On the setup page, both people enable camera and microphone.
-2. The caller creates and copies a compressed `OPL2.` invite code to the receiver using a trusted out-of-band channel.
+2. The caller creates and copies an invite code to the receiver using a trusted out-of-band channel.
 3. The receiver uses **Paste invite** (or pastes manually), creates a response code, sends that back, and can enter the call view while the caller completes the connection.
 4. The caller pastes that response and selects **Start call**. The app then switches to the dedicated call view.
 
-The app waits for ICE gathering to be `complete` before it exports each description. In Chrome, new codes are gzip-compressed and URL-safe Base64 encoded with an `OPL2.` prefix, making them smaller for WhatsApp while keeping the app static and server-free. The app also continues to accept the older plain Base64 format. Neither format is **encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
+The app waits for ICE gathering to be `complete` before it exports each description. The current invite/response format is standard Base64 for the broadest browser compatibility; the app can still accept a previously issued compressed `OPL2.` code in a supporting browser. Neither format is **encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
 When camera access is enabled, the app tries 2560×1440 (2K) at 30fps first, then 1920×1080 at 30fps, and finally the browser’s default camera mode. Browser encoding performance and available network bandwidth can still reduce the quality delivered to the other person.
 

@@ -23,9 +23,9 @@ Caller browser                         Receiver browser
 --------------                         ----------------
 camera/mic → RTCPeerConnection         camera/mic → RTCPeerConnection
        │                                        │
-       ├─ create offer → compressed invite code ┤ manual trusted channel
+       ├─ create offer → Base64 invite code ────┤ manual trusted channel
        │                                        │
-       ├─ paste compressed response code ←───────┤ create answer
+       ├─ paste Base64 response code ←──────────┤ create answer
        │                                        │
        └──────── encrypted direct WebRTC media ─┘
 
@@ -47,7 +47,7 @@ There is intentionally no TURN server. Therefore, calls can fail on restrictive 
 ## Important technical truths
 
 1. WebRTC offer/answer exchange is manual. The app has no server-based signaling or friend discovery.
-2. The offer and answer are WebRTC session descriptions. In Chrome, the UI gzip-compresses then URL-safe Base64-encodes new codes with an `OPL2.` prefix; it continues accepting the prior Base64 format. This is only for easier copy/paste. **Neither format is encryption.**
+2. The offer and answer are WebRTC session descriptions. New codes use standard Base64 for broad browser compatibility; the UI can still decode a prior compressed `OPL2.` code in a supporting browser. Both formats only make copy/paste less awkward. **Neither format is encryption.**
 3. WebRTC transport is encrypted by the browser; this app does not implement an extra password-based encryption layer.
 4. The app waits for `iceGatheringState === "complete"` before serializing local descriptions. This ensures candidates gathered at that point are included in the copied code.
 5. A caller's `RTCPeerConnection` lives only in JavaScript memory. Reloading, closing, or navigating away from the caller tab invalidates that invite. Do not imply that localStorage alone can preserve an active call; it cannot preserve the live browser connection state.
@@ -61,7 +61,7 @@ The interface has two full-screen app views in one document: the setup view and 
 ### Caller
 
 1. Select **Enable camera & microphone** and grant browser permission.
-2. Select **Create invite**. The app creates a peer connection, waits for ICE gathering, stores the compressed invite in the current browser session, and reveals **Copy invite code**.
+2. Select **Create invite**. The app creates a peer connection, waits for ICE gathering, stores the Base64 invite in the current browser session, and reveals **Copy invite code**.
 3. Send the invite code to the receiver through an out-of-band channel.
 4. Select **Paste response** (or paste manually) into the single caller input and select **Start call**.
 5. The dedicated call view opens. Keep the tab open until connected or disconnected.
