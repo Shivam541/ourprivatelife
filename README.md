@@ -21,6 +21,8 @@ The app has a setup page and a dedicated full-screen call page, implemented as t
 
 The app waits for ICE gathering to be `complete` before it exports each description. Base64 makes copying easier, but it is **not encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
+When camera access is enabled, the app requests up to 1080p at 30fps. This is a preference rather than a guarantee: browsers, device support, encoding performance, and available network bandwidth can reduce the quality delivered to the other person.
+
 ## In-call controls
 
 The full-screen call view contains only the two video feeds and the call controls. It can mute/unmute the microphone, turn the camera off/on, leave the call, and switch between picture-in-picture and an equal side-by-side layout similar to Google Meet. In picture-in-picture, the smaller feed stays above the main feed and can be dragged anywhere within the call area. Use **Switch** to exchange the main and floating feeds.

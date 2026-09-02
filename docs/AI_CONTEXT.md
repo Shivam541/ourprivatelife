@@ -84,6 +84,7 @@ Only the relevant text input should be visible at a time. Do not reintroduce exp
 - The explicit privacy limitation language. Do not claim that this is “zero server” while public STUN is configured.
 - The caller reload limitation and clear user-facing error message.
 - `autoplay`, `playsinline`, and `muted` on the local video element; these reduce browser playback friction, especially in Chrome.
+- The camera setup requests up to 1080p at 30fps. This is only a capture preference; WebRTC may adapt the transmitted quality for device performance or network conditions.
 
 ### Treat as explicit scope changes
 
