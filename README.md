@@ -25,7 +25,7 @@ When camera access is enabled, the app requests up to 1080p at 30fps. This is a 
 
 ## In-call controls
 
-The full-screen call view contains only the two video feeds and the call controls. It can mute/unmute the microphone, turn the camera off/on, leave the call, and switch between picture-in-picture and an equal side-by-side layout similar to Google Meet. In picture-in-picture, the smaller feed stays above the main feed and can be dragged anywhere within the call area. Use **Switch** to exchange the main and floating feeds.
+The full-screen call view contains only the two video feeds and the call controls. It can mute/unmute the microphone, turn the camera off/on, leave the call, and switch between picture-in-picture and an equal side-by-side layout similar to Google Meet. In picture-in-picture, the smaller feed stays above the main feed and can be dragged anywhere within the call area. Use **Switch** to exchange the main and floating feeds. The control bar uses five equal-width buttons on phones, preserves both feeds side-by-side in landscape, and reduces to icon-only controls on very short landscape screens so every control remains reachable.
 
 Recording is not available in this app. The friend video is the main call view and your camera appears as a smaller picture-in-picture tile until you select the side-by-side layout control.
 

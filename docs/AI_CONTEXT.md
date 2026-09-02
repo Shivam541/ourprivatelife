@@ -72,7 +72,7 @@ The interface has two full-screen app views in one document: the setup view and 
 2. Select **Accept invite & create response**. The app requests camera/microphone access if needed, produces a response, and hides the invite input.
 3. Copy and send the response code back to the caller, then select **Enter call**.
 
-Only the relevant text input should be visible at a time. Do not reintroduce exposed JSON textareas as output; codes are copied with buttons. The call view contains only the feeds and mic, camera, layout, switch-screen, and leave controls. Recording is deliberately unavailable. The layout control switches between picture-in-picture and side-by-side feeds. In picture-in-picture, the elevated smaller feed is draggable within the call area; Switch exchanges the large and floating feeds.
+Only the relevant text input should be visible at a time. Do not reintroduce exposed JSON textareas as output; codes are copied with buttons. The call view contains only the feeds and mic, camera, layout, switch-screen, and leave controls. Recording is deliberately unavailable. The layout control switches between picture-in-picture and side-by-side feeds. In picture-in-picture, the elevated smaller feed is draggable within the call area; Switch exchanges the large and floating feeds. On phones, the controls use five equal-width cells; on short landscape screens their visible labels are hidden but their accessible labels remain, ensuring every control stays on screen.
 
 ## Editing guidance
 
