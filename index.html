@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A manual-signaling WebRTC video call demo." />
     <title>Our Private Life — Direct Call</title>
-    <link rel="stylesheet" href="styles.css?v=20260902-4" />
+    <link rel="stylesheet" href="styles.css?v=20260902-5" />
   </head>
   <body>
     <main>
@@ -27,10 +27,10 @@
         </section>
       </section>
       <section id="callPage" class="call-page" aria-label="Video call" hidden>
-        <div class="call-topbar"><div class="call-brand">Our Private Life</div><section class="status call-status" aria-live="polite"><span id="callStatusDot" class="dot"></span><span id="callStatusText">Connecting…</span></section></div>
+        <div class="call-topbar"><div class="call-brand"><svg class="brand-eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-5.5 9.5-5.5S21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.5"/><path d="m4 4 16 16"/></svg><span>OUR <strong>PRIVATE LIFE</strong></span></div><section class="status call-status" aria-live="polite"><span id="callStatusDot" class="dot"></span><span id="callStatusText">Connecting…</span></section></div>
         <section id="videos" class="videos" aria-label="Video streams">
-          <figure id="remoteVideoCard" class="video-card remote-card"><video id="remoteVideo" autoplay playsinline></video><figcaption>Friend's camera</figcaption></figure>
-          <figure id="localVideoCard" class="video-card local-card"><video id="localVideo" autoplay playsinline muted></video><figcaption>Your camera</figcaption></figure>
+          <figure id="remoteVideoCard" class="video-card remote-card"><video id="remoteVideo" autoplay playsinline></video><figcaption><span class="participant-label"><svg class="participant-icon muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-3 0h6M3 3l18 18"/></svg><span>Friend's camera</span></span></figcaption></figure>
+          <figure id="localVideoCard" class="video-card local-card"><video id="localVideo" autoplay playsinline muted></video><figcaption><span class="participant-label"><svg class="participant-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-3 0h6"/></svg><span>Your camera</span></span></figcaption></figure>
         </section>
         <nav class="call-controls" aria-label="Call controls">
           <button id="toggleMicButton" class="icon-button" aria-label="Mute microphone" title="Mute microphone" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-3 0h6"/></svg><span>Mic</span></button>
