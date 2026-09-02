@@ -21,7 +21,7 @@ The app has a setup page and a dedicated full-screen call page, implemented as t
 
 The app waits for ICE gathering to be `complete` before it exports each description. Base64 makes copying easier, but it is **not encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
-When camera access is enabled, the app requests up to 1080p at 30fps. This is a preference rather than a guarantee: browsers, device support, encoding performance, and available network bandwidth can reduce the quality delivered to the other person.
+When camera access is enabled, the app tries 2560×1440 (2K) at 30fps first, then 1920×1080 at 30fps, and finally the browser’s default camera mode. Browser encoding performance and available network bandwidth can still reduce the quality delivered to the other person.
 
 ## In-call controls
 
