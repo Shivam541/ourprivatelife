@@ -56,21 +56,23 @@ There is intentionally no TURN server. Therefore, calls can fail on restrictive 
 
 ## User flow and UI state
 
+The interface has two full-screen app views in one document: the setup view and the call view. They are not separate HTML navigations because a `RTCPeerConnection` cannot survive a navigation. Compact setup/signaling text and the selected layout are retained in tab-scoped `sessionStorage`; a reload still ends the live camera/WebRTC session and the caller must create a new invite.
+
 ### Caller
 
-1. Select **Start camera & microphone** and grant browser permission.
-2. Select **Create offer**. The app creates a peer connection, waits for ICE gathering, stores the Base64 invite only in memory, and reveals **Copy invite code**.
+1. Select **Enable camera & microphone** and grant browser permission.
+2. Select **Create invite**. The app creates a peer connection, waits for ICE gathering, stores the Base64 invite in the current browser session, and reveals **Copy invite code**.
 3. Send the invite code to the receiver through an out-of-band channel.
-4. Paste the returned response code into the single caller input and select **Accept answer**.
-5. Keep the tab open until connected or disconnected.
+4. Paste the returned response code into the single caller input and select **Start call**.
+5. The dedicated call view opens. Keep the tab open until connected or disconnected.
 
 ### Receiver
 
 1. Paste the received invite code into the visible input.
-2. Select **Accept offer & create answer**. The app requests camera/microphone access if needed, produces a response, and hides the invite input.
-3. Copy and send the response code back to the caller.
+2. Select **Accept invite & create response**. The app requests camera/microphone access if needed, produces a response, and hides the invite input.
+3. Copy and send the response code back to the caller, then select **Enter call**.
 
-Only the relevant text input should be visible at a time. Do not reintroduce exposed JSON textareas as output; codes are copied with buttons.
+Only the relevant text input should be visible at a time. Do not reintroduce exposed JSON textareas as output; codes are copied with buttons. The call view contains only the feeds and mic, camera, layout, switch-screen, and leave controls. Recording is deliberately unavailable. The layout control switches between picture-in-picture and side-by-side feeds. In picture-in-picture, the elevated smaller feed is draggable within the call area; Switch exchanges the large and floating feeds.
 
 ## Editing guidance
 

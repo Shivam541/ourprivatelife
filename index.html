@@ -8,82 +8,40 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="page">
-      <header>
-        <p class="eyebrow">ourprivatelife.com · Manual signaling · WebRTC</p>
-        <h1>Our Private Life</h1>
-        <p class="intro">No app backend, database, or TURN relay is used. Manual copy-paste signaling keeps setup server-free.</p>
-      </header>
-
-      <aside class="warning">
-        <strong>Important:</strong> this version uses Google's public STUN service only to discover network candidates, which makes direct calls across different cities much more likely. Call media is still peer-to-peer when a direct connection succeeds. Some restrictive networks use symmetric NAT and will still fail without a TURN relay. GitHub Pages only hosts this page; it is not part of the call.
-      </aside>
-
-      <section class="status" aria-live="polite">
-        <span id="statusDot" class="dot"></span>
-        <span id="statusText">Not connected</span>
+    <main>
+      <section id="setupPage" class="setup-page" aria-labelledby="setupTitle">
+        <header>
+          <p class="eyebrow">ourprivatelife.com · Manual signaling · WebRTC</p>
+          <h1 id="setupTitle">Our Private Life</h1>
+          <p class="intro">Set up a private one-to-one call, then move into a dedicated call view.</p>
+        </header>
+        <aside class="warning"><strong>Important:</strong> Google’s public STUN service is used only to discover network candidates. Call media stays peer-to-peer when a direct connection succeeds. Restrictive networks can still fail without a TURN relay. GitHub Pages only hosts this app; it is not part of the call.</aside>
+        <section class="status" aria-live="polite"><span id="statusDot" class="dot"></span><span id="statusText">Not connected</span></section>
+        <section class="setup-card">
+          <h2>1. Enable your camera and microphone</h2><p>Allow browser access before creating or accepting a session.</p><button id="startCameraButton">Enable camera &amp; microphone</button>
+        </section>
+        <section class="setup-card">
+          <h2>2. Choose how you want to connect</h2>
+          <div class="signaling-grid">
+            <div class="signaling-option"><h3>Start a session</h3><p>Create an invite, send it to your friend, then paste their response below.</p><button id="createOfferButton" disabled>Create invite</button><button id="copyOfferButton" class="secondary" disabled>Copy invite code</button></div>
+            <div id="receiverCard" class="signaling-option"><h3>Join a session</h3><p>Paste your friend’s invite, then copy the response back to them.</p><textarea id="remoteOffer" placeholder="Paste invite code here" aria-label="Invite code from friend"></textarea><button id="createAnswerButton">Accept invite &amp; create response</button><div id="answerReady" hidden><p class="success">Response ready — copy and send it.</p><button id="copyAnswerButton" class="secondary">Copy response code</button><button id="enterCallAfterAnswerButton">Enter call</button></div></div>
+          </div>
+          <div id="callerAnswerCard" class="answer-card" hidden><h3>Finish starting your session</h3><p>Paste your friend’s response. Keep this tab open — reloading it invalidates the invite.</p><textarea id="remoteAnswer" placeholder="Paste response code here" aria-label="Response code from friend"></textarea><button id="acceptAnswerButton">Start call</button></div>
+        </section>
       </section>
-
-      <section class="videos" aria-label="Video streams">
-        <figure id="localVideoCard" class="video-card video-tile">
-          <video id="localVideo" autoplay playsinline muted></video>
-          <figcaption>
-            <span class="video-title" title="Drag to move this tile">Your camera</span>
-            <span class="video-actions">
-              <button type="button" class="video-action icon-button" data-pin="localVideoCard" aria-label="Pin your camera full screen" title="Pin full screen" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8l-1 6 3 3v2H6v-2l3-3-1-6Zm4 11v7"/></svg></button>
-              <button type="button" class="video-action icon-button" data-fullscreen="localVideoCard" aria-label="Open your camera in full screen" title="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M8 21H3v-5m18 0v5h-5"/></svg></button>
-              <button type="button" class="video-action icon-button" data-minimize="localVideoCard" aria-label="Minimize video" title="Minimize" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v5H3m13-5v5h5M8 21v-5H3m13 5v-5h5"/></svg></button>
-            </span>
-          </figcaption>
-          <button type="button" class="video-resize-handle" aria-label="Resize your camera tile" title="Drag to resize"></button>
-        </figure>
-        <figure id="remoteVideoCard" class="video-card video-main">
-          <video id="remoteVideo" autoplay playsinline></video>
-          <figcaption>
-            <span class="video-title" title="Drag to move this tile">Friend's camera</span>
-            <span class="video-actions">
-              <button type="button" class="video-action icon-button" data-pin="remoteVideoCard" aria-label="Pin friend's camera with your tile" title="Pin with tile" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8l-1 6 3 3v2H6v-2l3-3-1-6Zm4 11v7"/></svg></button>
-              <button type="button" class="video-action icon-button" data-fullscreen="remoteVideoCard" aria-label="Open friend's camera in full screen" title="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M8 21H3v-5m18 0v5h-5"/></svg></button>
-              <button type="button" class="video-action icon-button" data-minimize="remoteVideoCard" aria-label="Minimize video" title="Minimize" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v5H3m13-5v5h5M8 21v-5H3m13 5v-5h5"/></svg></button>
-            </span>
-          </figcaption>
-          <button type="button" class="video-resize-handle" aria-label="Resize friend's camera tile" title="Drag to resize"></button>
-        </figure>
-      </section>
-
-      <section class="controls">
-        <button id="startCameraButton">1. Start camera &amp; microphone</button>
-        <button id="createOfferButton" disabled>2. Create offer</button>
-        <button id="toggleMicButton" class="media-control icon-button" aria-label="Mute microphone" title="Mute microphone" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-3 0h6"/></svg></button>
-        <button id="toggleCameraButton" class="media-control icon-button" aria-label="Turn camera off" title="Turn camera off" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="m17 10 4-3v10l-4-3v-4Z"/></svg></button>
-        <label class="resolution-control" for="recordingResolution">Recording quality <select id="recordingResolution" disabled><option value="1280x720">720p</option><option value="1920x1080">1080p</option></select></label>
-        <button id="recordButton" class="record-control icon-button" aria-label="Start recording friend's video" title="Start recording friend's video" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg></button>
-        <button id="disconnectButton" class="secondary icon-button" aria-label="Disconnect call" title="Disconnect call" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 5.8a2 2 0 0 1 2.6.2l1.4 1.4a2 2 0 0 1 .3 2.4l-1 1.7a13.4 13.4 0 0 0 2 2 13.4 13.4 0 0 0 2 2l1.7-1a2 2 0 0 1 2.4.3l1.4 1.4a2 2 0 0 1 .2 2.6l-.8 1.1c-.7 1-1.9 1.5-3.1 1.2-3-.7-6-2.7-8.7-5.4S2.7 9.7 2 6.7c-.3-1.2.2-2.4 1.2-3.1l1.1-.8Z"/></svg></button>
-      </section>
-      <p class="recording-note">Recording is saved only in this browser. Get your friend’s consent before recording.</p>
-
-      <section class="card">
-        <h2>Caller: create an invite</h2>
-        <p>Create an invite, copy it, and send it to your friend. The WebRTC data stays hidden.</p>
-        <button id="copyOfferButton" class="copy" disabled>Copy invite code</button>
-      </section>
-
-      <section id="receiverCard" class="card">
-        <h2>Receiver: paste an invite</h2>
-        <p>Paste the invite, create a response, then send that code back to the caller.</p>
-        <textarea id="remoteOffer" placeholder="Paste invite code here" aria-label="Invite code from friend"></textarea>
-        <button id="createAnswerButton">Accept offer &amp; create answer</button>
-        <div id="answerReady" hidden>
-          <p class="success">Response ready — copy and send it.</p>
-          <button id="copyAnswerButton" class="copy">Copy response code</button>
-        </div>
-      </section>
-
-      <section id="callerAnswerCard" class="card" hidden>
-        <h2>Caller: connect</h2>
-        <p>Paste the response. Keep this browser tab open—reloading it invalidates the invite.</p>
-        <textarea id="remoteAnswer" placeholder="Paste response code here" aria-label="Response code from friend"></textarea>
-        <button id="acceptAnswerButton">Accept answer</button>
+      <section id="callPage" class="call-page" aria-label="Video call" hidden>
+        <div class="call-topbar"><div class="call-brand">Our Private Life</div><section class="status call-status" aria-live="polite"><span id="callStatusDot" class="dot"></span><span id="callStatusText">Connecting…</span></section></div>
+        <section id="videos" class="videos" aria-label="Video streams">
+          <figure id="remoteVideoCard" class="video-card remote-card"><video id="remoteVideo" autoplay playsinline></video><figcaption>Friend's camera</figcaption></figure>
+          <figure id="localVideoCard" class="video-card local-card"><video id="localVideo" autoplay playsinline muted></video><figcaption>Your camera</figcaption></figure>
+        </section>
+        <nav class="call-controls" aria-label="Call controls">
+          <button id="toggleMicButton" class="icon-button" aria-label="Mute microphone" title="Mute microphone" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-3 0h6"/></svg><span>Mic</span></button>
+          <button id="toggleCameraButton" class="icon-button" aria-label="Turn camera off" title="Turn camera off" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/><path d="m17 10 4-3v10l-4-3v-4Z"/></svg><span>Camera</span></button>
+          <button id="sideBySideButton" class="icon-button" aria-label="Switch to side-by-side view" title="Side-by-side view" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="8" height="14" rx="1"/><rect x="13" y="5" width="8" height="14" rx="1"/></svg><span>Layout</span></button>
+          <button id="switchScreensButton" class="icon-button" aria-label="Switch camera screens" title="Switch screens"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11l-3-3m3 3-3 3M17 17H6l3 3m-3-3 3-3"/></svg><span>Switch</span></button>
+          <button id="disconnectButton" class="icon-button hangup" aria-label="Disconnect call" title="Disconnect call" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 5.8a2 2 0 0 1 2.6.2l1.4 1.4a2 2 0 0 1 .3 2.4l-1 1.7a13.4 13.4 0 0 0 2 2 13.4 13.4 0 0 0 2 2l1.7-1a2 2 0 0 1 2.4.3l1.4 1.4a2 2 0 0 1 .2 2.6l-.8 1.1c-.7 1-1.9 1.5-3.1 1.2-3-.7-6-2.7-8.7-5.4S2.7 9.7 2 6.7c-.3-1.2.2-2.4 1.2-3.1l1.1-.8Z"/></svg><span>Leave</span></button>
+        </nav>
       </section>
     </main>
     <script src="app.js"></script>

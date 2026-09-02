@@ -10,22 +10,24 @@ const rtcConfig = {
 
 The page is suitable for GitHub Pages. GitHub Pages serves it over HTTPS, which browsers require for camera and microphone access. On a local machine, use `http://localhost` rather than opening `index.html` directly if the browser refuses media permissions.
 
-## Calling flow
+## Two-page calling flow
 
-1. Both people open the same deployed page and press **Start camera & microphone**.
-2. Caller creates and copies a compact Base64 invite code to the receiver using a trusted out-of-band channel.
-3. Receiver pastes it, creates a response code, and sends that back.
-4. Caller pastes that answer into the final box and presses **Accept answer**.
+The app has a setup page and a dedicated full-screen call page, implemented as two views in the same browser document. This preserves the live WebRTC connection: navigating to a separate HTML page would destroy the caller's in-memory peer connection and invalidate the invite.
+
+1. On the setup page, both people enable camera and microphone.
+2. The caller creates and copies a compact Base64 invite code to the receiver using a trusted out-of-band channel.
+3. The receiver pastes it, creates a response code, sends that back, and can enter the call view while the caller completes the connection.
+4. The caller pastes that response and selects **Start call**. The app then switches to the dedicated call view.
 
 The app waits for ICE gathering to be `complete` before it exports each description. Base64 makes copying easier, but it is **not encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
-## In-call controls and recording
+## In-call controls
 
-Once camera and microphone access is granted, the call controls can mute/unmute the microphone and turn the camera off/on without disconnecting. The incoming friend video can also be recorded locally at a selected 720p or 1080p WebM output size; choose the quality, press the record icon, then press it again to stop and download the file.
+The full-screen call view contains only the two video feeds and the call controls. It can mute/unmute the microphone, turn the camera off/on, leave the call, and switch between picture-in-picture and an equal side-by-side layout similar to Google Meet. In picture-in-picture, the smaller feed stays above the main feed and can be dragged anywhere within the call area. Use **Switch** to exchange the main and floating feeds.
 
-Recording is entirely browser-local and does not upload media to this app, but it is a sensitive action. Get the other participant's clear consent before starting. The selected output size does not create detail that is absent from the incoming video—a 1080p file may upscale a lower-resolution stream.
+Recording is not available in this app. The friend video is the main call view and your camera appears as a smaller picture-in-picture tile until you select the side-by-side layout control.
 
-The friend video is the main call view; your camera is a movable, resizable tile. Use the icon controls in a video footer to pin a view, enter browser full screen, or minimize back to the tiled call view. Pinned view keeps the other feed as a movable tile. The microphone, camera, record, and hang-up controls use icons with hover labels.
+Setup fields, generated invite/response codes, and the selected layout are kept in browser session storage while moving between the two app views. A reload still stops the camera and invalidates a live WebRTC connection; saved signaling text can be copied again, but the caller must create a new invite before accepting a response after a reload.
 
 ## Screen sharing status
 
