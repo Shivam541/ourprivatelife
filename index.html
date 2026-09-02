@@ -11,11 +11,8 @@
     <main>
       <section id="setupPage" class="setup-page" aria-labelledby="setupTitle">
         <header>
-          <p class="eyebrow">ourprivatelife.com · Manual signaling · WebRTC</p>
           <h1 id="setupTitle">Our Private Life</h1>
-          <p class="intro">Set up a private one-to-one call, then move into a dedicated call view.</p>
         </header>
-        <aside class="warning"><strong>Important:</strong> Google’s public STUN service is used only to discover network candidates. Call media stays peer-to-peer when a direct connection succeeds. Restrictive networks can still fail without a TURN relay. GitHub Pages only hosts this app; it is not part of the call.</aside>
         <section class="status" aria-live="polite"><span id="statusDot" class="dot"></span><span id="statusText">Not connected</span></section>
         <section class="setup-card">
           <h2>1. Enable your camera and microphone</h2><p>Allow browser access before creating or accepting a session.</p><button id="startCameraButton">Enable camera &amp; microphone</button>
