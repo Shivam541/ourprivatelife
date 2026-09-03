@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A manual-signaling WebRTC video call demo." />
     <title>Our Private Life — Direct Call</title>
-    <link rel="stylesheet" href="styles.css?v=20260902-5" />
+    <link rel="stylesheet" href="styles.css?v=20260903-3" />
   </head>
   <body>
     <main>
@@ -27,7 +27,8 @@
         </section>
       </section>
       <section id="callPage" class="call-page" aria-label="Video call" hidden>
-        <div class="call-topbar"><div class="call-brand"><svg class="brand-eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-5.5 9.5-5.5S21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.5"/><path d="m4 4 16 16"/></svg><span>OUR <strong>PRIVATE LIFE</strong></span></div><section class="status call-status" aria-live="polite"><span id="callStatusDot" class="dot"></span><span id="callStatusText">Connecting…</span></section></div>
+        <div class="call-topbar"><div class="call-brand"><svg class="brand-eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-5.5 9.5-5.5S21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.5"/><path d="m4 4 16 16"/></svg><span>OUR <strong>PRIVATE LIFE</strong></span></div><button id="showVerificationButton" class="verification-toggle" type="button" aria-label="Show verification code" title="Show verification code" aria-controls="verificationCard" aria-expanded="false" disabled>Verify</button><section class="status call-status" aria-live="polite"><span id="callStatusDot" class="dot"></span><span id="callStatusText">Connecting…</span></section></div>
+        <aside id="verificationCard" class="call-verification" role="dialog" aria-label="Connection verification code" aria-live="polite" hidden><button id="hideVerificationButton" class="verification-close" type="button" aria-label="Hide verification code" title="Hide verification code">×</button><span class="verification-title">Verify with your friend</span><strong id="verificationEmojis" class="verification-emojis"></strong><span id="verificationCode" class="verification-code"></span><span class="verification-note">Both must match</span></aside>
         <section id="videos" class="videos" aria-label="Video streams">
           <figure id="remoteVideoCard" class="video-card remote-card"><video id="remoteVideo" autoplay playsinline></video><figcaption><span class="participant-label"><svg class="participant-icon muted" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-3 0h6M3 3l18 18"/></svg><span>Friend's camera</span></span></figcaption></figure>
           <figure id="localVideoCard" class="video-card local-card"><video id="localVideo" autoplay playsinline muted></video><figcaption><span class="participant-label"><svg class="participant-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-3 0h6"/></svg><span>Your camera</span></span></figcaption></figure>
@@ -38,10 +39,11 @@
           <button id="copyAnswerInCallButton" class="icon-button copy-response" aria-label="Copy response code" title="Copy response code" hidden disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy</span></button>
           <button id="sideBySideButton" class="icon-button" aria-label="Switch to side-by-side view" title="Side-by-side view" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="8" height="14" rx="1"/><rect x="13" y="5" width="8" height="14" rx="1"/></svg><span>Layout</span></button>
           <button id="switchScreensButton" class="icon-button" aria-label="Switch camera screens" title="Switch screens"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11l-3-3m3 3-3 3M17 17H6l3 3m-3-3 3-3"/></svg><span>Switch</span></button>
+          <button id="toggleFullscreenButton" class="icon-button" aria-label="Enter full screen" title="Enter full screen" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg><span>Full screen</span></button>
           <button id="disconnectButton" class="icon-button hangup" aria-label="Disconnect call" title="Disconnect call" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 5.8a2 2 0 0 1 2.6.2l1.4 1.4a2 2 0 0 1 .3 2.4l-1 1.7a13.4 13.4 0 0 0 2 2 13.4 13.4 0 0 0 2 2l1.7-1a2 2 0 0 1 2.4.3l1.4 1.4a2 2 0 0 1 .2 2.6l-.8 1.1c-.7 1-1.9 1.5-3.1 1.2-3-.7-6-2.7-8.7-5.4S2.7 9.7 2 6.7c-.3-1.2.2-2.4 1.2-3.1l1.1-.8Z"/></svg><span>Leave</span></button>
         </nav>
       </section>
     </main>
-    <script src="app.js?v=20260902-4"></script>
+    <script src="app.js?v=20260903-3"></script>
   </body>
 </html>

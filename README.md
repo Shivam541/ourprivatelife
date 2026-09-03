@@ -21,6 +21,8 @@ Browser Back navigation is locked for this tab, including history gestures and B
 3. The receiver uses **Paste invite** (or pastes manually), creates a response code, and can either copy it on the setup view or enter the call. Once in the call, **Copy** remains available in the call controls until they leave.
 4. The caller pastes that response and selects **Start call**. The app then switches to the dedicated call view.
 
+Once both people enter the call, each sees the same four emoji and six-digit verification phrase. Compare it using the separate channel you trust before discussing anything private. A mismatch means leave the call. A match confirms that both screens derived the phrase from the same WebRTC fingerprints; it does not independently prove the other person's real-world identity.
+
 The app waits for ICE gathering to be `complete` before it exports each description. The current invite/response format is standard Base64 for the broadest browser compatibility; the app can still accept a previously issued compressed `OPL2.` code in a supporting browser. Neither format is **encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
 When camera access is enabled, the app tries 2560×1440 (2K) at 30fps first, then 1920×1080 at 30fps, and finally the browser’s default camera mode. Browser encoding performance and available network bandwidth can still reduce the quality delivered to the other person.
@@ -29,7 +31,7 @@ The browser can share a microphone with another tab or app only when the operati
 
 ## In-call controls
 
-The full-screen call view contains only the two video feeds and the call controls. It can mute/unmute the microphone, turn the camera off/on, leave the call, and switch between picture-in-picture and an equal side-by-side layout similar to Google Meet. Turning the camera back on obtains a fresh video track and replaces the outgoing track, so the other person receives a resumed feed rather than a frozen frame. In picture-in-picture, the smaller feed stays above the main feed and can be dragged anywhere within the call area. Use **Switch** to exchange the main and floating feeds. The control bar uses five equal-width buttons on phones, preserves both feeds side-by-side in landscape, and reduces to icon-only controls on very short landscape screens so every control remains reachable.
+The full-screen call view contains only the two video feeds and the call controls. It can mute/unmute the microphone, turn the camera off/on, leave the call, enter or exit browser full screen, and switch between picture-in-picture and an equal side-by-side layout similar to Google Meet. Turning the camera back on obtains a fresh video track and replaces the outgoing track, so the other person receives a resumed feed rather than a frozen frame. In picture-in-picture, the smaller feed stays above the main feed and can be dragged anywhere within the call area. Use **Switch** to exchange the main and floating feeds. The **Full screen** control hides browser chrome after the call view opens; press Esc or use the control again to exit. The control bar uses equal-width buttons on phones, preserves both feeds side-by-side in landscape, and reduces to icon-only controls on very short landscape screens so every control remains reachable.
 
 Recording is not available in this app. The friend video is the main call view and your camera appears as a smaller picture-in-picture tile until you select the side-by-side layout control.
 
@@ -42,6 +44,8 @@ Screen sharing is not implemented yet. It can be added with the browser's `getDi
 ## Privacy and reliability boundary
 
 STUN lets each browser learn network candidates that may allow a direct connection across different home, office, or mobile networks. It does **not** carry call audio/video after a direct route is established. The STUN provider can receive network metadata, such as your public IP address.
+
+Invite and response codes are encoding, not encryption. Send them only through a channel where you can recognize your friend. The in-call verification phrase helps detect a signaling man-in-the-middle only when both people compare it using a separate channel the attacker cannot alter.
 
 There is no TURN fallback in this project. If either person is behind a restrictive or symmetric NAT, the direct call may still fail. That is expected—not a GitHub Pages issue.
 
