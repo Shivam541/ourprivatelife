@@ -40,6 +40,8 @@ const rtcConfig = {
 };
 ```
 
+The caller also creates one ordered WebRTC `RTCDataChannel` named `chat` before generating the offer. The receiver accepts it through `ondatachannel`. It uses the same live peer connection as the media, has no server or persistent history, and messages disappear when the connection closes.
+
 The public STUN service helps both browsers discover possible direct routes across different networks. It does **not** relay a successful call's audio/video. STUN can learn network metadata such as the user's public IP address.
 
 There is intentionally no TURN server. Therefore, calls can fail on restrictive firewalls or symmetric NAT. Adding TURN is a deliberate product/privacy decision because TURN relays media when a direct route cannot be made.
@@ -74,7 +76,7 @@ The interface has two full-screen app views in one document: the setup view and 
 
 After both descriptions are set, the call view shows a short authentication string: four emojis and a six-digit code derived from the normalized local and remote SDP fingerprint lines. Both people compare it using a trusted separate channel. If it differs, leave the call. A match confirms the same fingerprint set, not the friend's real-world identity.
 
-Only the relevant text input should be visible at a time. Do not reintroduce exposed JSON textareas as output; codes are copied with buttons and can be pasted from the clipboard with a user-initiated control (manual paste remains the fallback if clipboard permission is unavailable). The call view contains only the feeds and mic, camera, layout, switch-screen, full-screen, and leave controls. Recording is deliberately unavailable. The full-screen control uses the browser Fullscreen API to hide browser chrome; it must reflect an Esc/system exit and be disabled when unavailable. The layout control switches between picture-in-picture and side-by-side feeds. In picture-in-picture, the elevated smaller feed is draggable within the call area; Switch exchanges the large and floating feeds. On phones, the controls use equal-width cells; on short landscape screens their visible labels are hidden but their accessible labels remain, ensuring every control stays on screen.
+Only the relevant text input should be visible at a time. Do not reintroduce exposed JSON textareas as output; codes are copied with buttons and can be pasted from the clipboard with a user-initiated control (manual paste remains the fallback if clipboard permission is unavailable). The call view contains the feeds plus mic, camera, layout, switch-screen, full-screen, chat, and leave controls. Chat must remain a plain-text, transient data-channel feature: enable it only when the channel is open, close only the panel when the user toggles it, and clear messages when the call ends. On phones, the chat panel fills the screen and its close control returns to video. Recording is deliberately unavailable. The full-screen control uses the browser Fullscreen API to hide browser chrome; it must reflect an Esc/system exit and be disabled when unavailable. The layout control switches between picture-in-picture and side-by-side feeds. In picture-in-picture, the elevated smaller feed is draggable within the call area; Switch exchanges the large and floating feeds. On phones, the controls use equal-width cells; on short landscape screens their visible labels are hidden but their accessible labels remain, ensuring every control stays on screen.
 
 ## Editing guidance
 
@@ -118,7 +120,8 @@ Manual Chrome test checklist:
 2. Open the site in two separate browser contexts/devices.
 3. Complete the caller/receiver exchange without reloading either tab.
 4. Confirm local and remote video render, status reaches `connected`, and **Disconnect** releases camera/microphone.
-5. Test the caller reload path: accepting the old response must give a clear message and require a new invite.
+5. Confirm **Chat** becomes available after connection, sends plain text in both directions, and clears after **Disconnect**.
+6. Test the caller reload path: accepting the old response must give a clear message and require a new invite.
 
 ## Deployment
 
