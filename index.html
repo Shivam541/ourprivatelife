@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A manual-signaling WebRTC video call demo." />
     <title>Our Private Life — Direct Call</title>
-    <link rel="stylesheet" href="styles.css?v=20260903-4" />
+    <link rel="stylesheet" href="styles.css?v=20260903-5" />
   </head>
   <body>
     <main>
@@ -36,7 +36,8 @@
         <aside id="chatPanel" class="chat-panel" aria-label="Private chat" aria-hidden="true" hidden>
           <header class="chat-header"><div><span class="chat-eyebrow">Private chat</span><strong>Messages disappear when the call ends</strong></div><button id="closeChatButton" class="chat-close" type="button" aria-label="Close chat" title="Close chat">×</button></header>
           <div id="chatMessages" class="chat-messages" aria-live="polite" aria-relevant="additions"><p class="chat-empty">Chat will be ready when your friend connects.</p></div>
-          <form id="chatForm" class="chat-compose"><label class="sr-only" for="chatInput">Message</label><input id="chatInput" type="text" maxlength="1000" autocomplete="off" placeholder="Write a message" disabled /><button id="sendChatButton" type="submit" disabled>Send</button></form>
+          <div id="chatCommandMenu" class="chat-command-menu" role="listbox" aria-label="Chat commands" hidden></div>
+          <form id="chatForm" class="chat-compose"><label class="sr-only" for="chatInput">Message</label><input id="chatInput" type="text" maxlength="1000" autocomplete="off" aria-autocomplete="list" aria-controls="chatCommandMenu" aria-expanded="false" placeholder="Write a message" disabled /><input id="chatFileInput" class="sr-only" type="file" aria-label="Choose a file to send" disabled /><button id="attachFileButton" class="chat-attach" type="button" aria-label="Attach a file" title="Attach a file" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20.5 11.5-8.3 8.3a5 5 0 0 1-7.1-7.1l8.7-8.7a3.5 3.5 0 1 1 5 5l-8.7 8.7a2 2 0 0 1-2.8-2.8l8-8"/></svg></button><button id="sendChatButton" type="submit" disabled>Send</button></form>
         </aside>
         <nav class="call-controls" aria-label="Call controls">
           <button id="toggleMicButton" class="icon-button" aria-label="Mute microphone" title="Mute microphone" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3m-3 0h6"/></svg><span>Mic</span></button>
