@@ -25,7 +25,7 @@ Once both people enter the call, each sees the same four emoji and six-digit ver
 
 The app waits for ICE gathering to be `complete` before it exports each description. The current invite/response format is standard Base64 for the broadest browser compatibility; the app can still accept a previously issued compressed `OPL2.` code in a supporting browser. Neither format is **encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
-When camera access is enabled, the app tries 2560×1440 (2K) at 30fps first, then 1920×1080 at 30fps, and finally the browser’s default camera mode. Browser encoding performance and available network bandwidth can still reduce the quality delivered to the other person.
+The default camera profile is 720p at 18fps to reduce heat and battery use. During a live call, open **Quality** to independently select 480p, 720p, 1080p, or 1440p and 18, 24, or 30fps, then select **Apply quality**. This replaces only your outgoing camera track and updates its sender limits without restarting the call. Actual capture quality remains subject to camera support, browser adaptation, and network conditions.
 
 The browser can share a microphone with another tab or app only when the operating system and device driver allow it. This app cannot read audio already captured by Google Meet or override an exclusive microphone lock. If the microphone becomes unavailable during an active call, end the other call or release that microphone, then select **Mic** in this app to reconnect it without ending the WebRTC call.
 
