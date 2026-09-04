@@ -41,9 +41,11 @@ Recording is not available in this app. The friend video is the main call view a
 
 Setup fields, generated invite/response codes, and the selected layout are kept in browser session storage while moving between the two app views. A reload still stops the camera and invalidates a live WebRTC connection; saved signaling text can be copied again, but the caller must create a new invite before accepting a response after a reload.
 
-## Screen sharing status
+## Screen sharing
 
-Screen sharing is not implemented yet. It can be added with the browser's `getDisplayMedia()` API without adding a backend: a basic version would replace the outgoing camera track for the existing call, then restore it when sharing ends. Keeping a camera tile and screen share visible at the same time would require a second WebRTC track and another manual offer/answer exchange.
+After the call and private data channel are connected, select **Share screen**. The browser lets you choose a screen, window, or browser tab. When the browser provides it, the app also sends the selected screen's computer/tab audio; this is browser- and selection-dependent, so the app cannot force computer audio to be available.
+
+The screen is shown full-size, while a floating call tile retains both cameras. Screen media is one-way: one person is the active sender and the other is the receiver. While your friend shares, your Share screen control is unavailable; they must stop before you can become the sender. Starting or stopping a share adds/removes its WebRTC tracks and automatically renegotiates through the existing encrypted data channel; neither person needs to copy another invite or response code. A share can be stopped from the app or the browser's own sharing control. Both people must be using this version of the app for automatic screen-share renegotiation.
 
 ## Privacy and reliability boundary
 
