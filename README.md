@@ -47,6 +47,12 @@ After the call and private data channel are connected, select **Share screen**. 
 
 The screen is shown full-size, while a floating call tile retains both cameras. Screen media is one-way: one person is the active sender and the other is the receiver. While your friend shares, your Share screen control is unavailable; they must stop before you can become the sender. Starting or stopping a share adds/removes its WebRTC tracks and automatically renegotiates through the existing encrypted data channel; neither person needs to copy another invite or response code. A share can be stopped from the app or the browser's own sharing control. Both people must be using this version of the app for automatic screen-share renegotiation.
 
+While viewing your friend's shared screen, select **Laser** to point at it. The pointer is sent as normalized coordinates through the existing encrypted data channel, is visible to both people, and clears automatically after roughly two seconds. It is not a persistent drawing or recording feature.
+
+## Floating controls (desktop Chrome/Edge)
+
+Select **Float controls** during a connected call to open an always-on-top Document Picture-in-Picture window with both camera feeds and controls for microphone, camera, screen sharing, and leaving. Use **Close float** in that window whenever it is distracting; this only closes the floating window and keeps the call in the meeting tab. The browser feature is unavailable in unsupported browsers, and closing the meeting tab also closes the floating window.
+
 ## Privacy and reliability boundary
 
 STUN lets each browser learn network candidates that may allow a direct connection across different home, office, or mobile networks. It does **not** carry call audio/video after a direct route is established. The STUN provider can receive network metadata, such as your public IP address.

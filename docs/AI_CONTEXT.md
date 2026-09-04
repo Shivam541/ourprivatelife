@@ -82,6 +82,10 @@ Only the relevant text input should be visible at a time. Do not reintroduce exp
 
 After the peer connection and its `chat` data channel are open, `getDisplayMedia()` may add a screen video track and, only when the browser supplies it, a computer/tab audio track. Screen media is one-way: one active sender and one receiver. When `screen-share-state` says the friend is sharing, disable the local Share screen control until that state ends; do not permit simultaneous screen streams. The call UI shows the screen as the main stage and both cameras in a draggable floating tile. The data channel carries internal `webrtc-offer` and `webrtc-answer` messages for automatic renegotiation; users must never exchange another manual code. Use the existing caller/receiver role as the polite/impolite perfect-negotiation roles so simultaneous renegotiation can recover from an offer collision. Removing the screen tracks must renegotiate again and stop capture tracks. Browser/OS choice determines whether computer audio is available, so do not promise it.
 
+### Temporary laser and floating controls
+
+Only the screen-share receiver can enable the temporary laser pointer. Pointer coordinates are normalized to the screen-stage bounds and sent as a `laser-pointer` data-channel message; render the mark on both views and clear it after a short timeout. It is intentionally not a drawing history. On desktop Chrome/Edge, `DocumentPictureInPicture` may open a browser-managed always-on-top window with duplicate camera elements and the essential local controls. Feature-detect it, require a user click, keep the meeting alive when its explicit **Close float** control closes the PiP window, and close it when the meeting ends. Do not describe it as a native or persistent system overlay.
+
 ## Editing guidance
 
 ### Preserve by default
