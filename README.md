@@ -16,16 +16,21 @@ The app has a setup page and a dedicated full-screen call page, implemented as t
 
 Browser Back navigation is locked for this tab, including history gestures and Backspace outside a text field. Use the app’s **Leave** control to end a call, or close the tab/window when finished.
 
-1. On the setup page, both people enable camera and microphone.
-2. The caller creates and copies an invite code to the receiver using a trusted out-of-band channel.
-3. The receiver uses **Paste invite** (or pastes manually), creates a response code, and can either copy it on the setup view or enter the call. Once in the call, **Copy** remains available in the call controls until they leave.
-4. The caller pastes that response and selects **Start call**. The app then switches to the dedicated call view.
+1. On the setup page, the browser requests camera and microphone access. Choose **Allow** to retain that permission for future visits to the same site.
+2. Choose **Create invite** or **Join a session**; the setup page then reveals only the relevant manual-signaling panel.
+3. The caller creates and copies an invite code to the receiver using a trusted out-of-band channel.
+4. The receiver uses **Paste invite** (or pastes manually), creates a response code, and can either copy it on the setup view or enter the call. Once in the call, **Copy** remains available in the call controls until they leave.
+5. The caller pastes that response and selects **Start call**. The app then switches to the dedicated call view.
 
 Once both people enter the call, each sees the same four emoji and six-digit verification phrase. Compare it using the separate channel you trust before discussing anything private. A mismatch means leave the call. A match confirms that both screens derived the phrase from the same WebRTC fingerprints; it does not independently prove the other person's real-world identity.
 
 The app waits for ICE gathering to be `complete` before it exports each description. The current invite/response format is standard Base64 for the broadest browser compatibility; the app can still accept a previously issued compressed `OPL2.` code in a supporting browser. Neither format is **encryption**. The caller must keep the browser tab open; a reload invalidates the active invite.
 
 The default camera profile is 720p at 18fps to reduce heat and battery use. During a live call, open **Quality** to independently select 480p, 720p, 1080p, or 1440p and 18, 24, or 30fps, then select **Apply quality**. This replaces only your outgoing camera track and updates its sender limits without restarting the call. Actual capture quality remains subject to camera support, browser adaptation, and network conditions.
+
+Call audio is captured in an unprocessed high-fidelity profile: the app requests 48 kHz, 24-bit, stereo audio; disables echo cancellation, noise suppression, and automatic gain; marks the track for music-quality audio; and requests up to 510 kbps for the outgoing Opus sender. These are browser preferences, not guarantees: the microphone, browser, network, and the other person's playback device can still limit the delivered quality. Use headphones to avoid acoustic echo, since the app intentionally does not remove it.
+
+Open **Quality** during a call to see the active microphone's reported sample rate, channel count, bit depth, processing state, and the outgoing bitrate target. This shows the browser's actual capture settings where it reports them; it does not measure the changing network bitrate.
 
 The browser can share a microphone with another tab or app only when the operating system and device driver allow it. This app cannot read audio already captured by Google Meet or override an exclusive microphone lock. If the microphone becomes unavailable during an active call, end the other call or release that microphone, then select **Mic** in this app to reconnect it without ending the WebRTC call.
 
@@ -44,6 +49,8 @@ Setup fields, generated invite/response codes, and the selected layout are kept 
 ## Screen sharing
 
 After the call and private data channel are connected, select **Share screen**. The browser lets you choose a screen, window, or browser tab. When the browser provides it, the app also sends the selected screen's computer/tab audio; this is browser- and selection-dependent, so the app cannot force computer audio to be available.
+
+Screen sharing targets up to 720p at 15 fps to reduce heat, battery use, and outgoing bandwidth. The browser selects the closest supported capture setting, so the actual stream can vary by selected screen or tab. The stream is marked as detail-oriented to keep text and documents readable.
 
 The screen is shown full-size, while a floating call tile retains both cameras. Screen media is one-way: one person is the active sender and the other is the receiver. While your friend shares, your Share screen control is unavailable; they must stop before you can become the sender. Starting or stopping a share adds/removes its WebRTC tracks and automatically renegotiates through the existing encrypted data channel; neither person needs to copy another invite or response code. A share can be stopped from the app or the browser's own sharing control. Both people must be using this version of the app for automatic screen-share renegotiation.
 
