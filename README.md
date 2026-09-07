@@ -46,6 +46,10 @@ Recording is not available in this app. The friend video is the main call view a
 
 Setup fields, generated invite/response codes, and the selected layout are kept in browser session storage while moving between the two app views. A reload still stops the camera and invalidates a live WebRTC connection; saved signaling text can be copied again, but the caller must create a new invite before accepting a response after a reload.
 
+### Self-destruct
+
+In Chat, use **`/self-destruct 5`** to arm a separate five-minute countdown that ends the call and clears live media/chat on both devices. It is independent of `/timer`, accepts whole minutes from 1 through 180, and starting it again replaces the active self-destruct countdown.
+
 ## Screen sharing
 
 After the call and private data channel are connected, select **Share screen**. The browser lets you choose a screen, window, or browser tab. When the browser provides it, the app also sends the selected screen's computer/tab audio; this is browser- and selection-dependent, so the app cannot force computer audio to be available.
